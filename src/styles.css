@@ -1,3 +1,9 @@
+.m{
+    background-color: lightblue;
+}
+.head{
+    text-align: center;
+}
 .calculator {
 max-width: 600px;
 background-color: beige;
