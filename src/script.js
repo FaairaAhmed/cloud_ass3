@@ -8,7 +8,7 @@ var buttons = document.getElementsByClassName("button");
     button.textContent != "x" && 
     button.textContent != "÷" && 
     button.textContent != "√" && 
-    button.textContent != "x²" && 
+    button.textContent != "sqr" && 
     button.textContent != "%" && 
     button.textContent != "<=" && 
     button.textContent != "±" && 
@@ -40,7 +40,7 @@ var buttons = document.getElementsByClassName("button");
       percent();
     } else if (button.textContent === "π") {
       pi();
-    } else if (button.textContent === "x²") {
+    } else if (button.textContent === "sqr") {
       square();
     } else if (button.textContent === "√") {
       squareRoot();
