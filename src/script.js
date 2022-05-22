@@ -8,9 +8,9 @@ var buttons = document.getElementsByClassName("button");
     button.textContent != "x" && 
     button.textContent != "÷" && 
     button.textContent != "√" && 
-    button.textContent != "x ²" && 
+    button.textContent != "x²" && 
     button.textContent != "%" && 
-    button.textContent != "Del" && 
+    button.textContent != "<=" && 
     button.textContent != "±" && 
     button.textContent != "sin" && 
     button.textContent != "cos" && 
@@ -34,13 +34,13 @@ var buttons = document.getElementsByClassName("button");
       divide();
     } else if (button.textContent === "±") {
       plusMinus();
-    } else if (button.textContent === "Del") {
+    } else if (button.textContent === "<=") {
       backspace();
     } else if (button.textContent === "%") {
       percent();
     } else if (button.textContent === "π") {
       pi();
-    } else if (button.textContent === "x ²") {
+    } else if (button.textContent === "x²") {
       square();
     } else if (button.textContent === "√") {
       squareRoot();
