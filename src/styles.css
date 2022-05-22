@@ -1,24 +1,21 @@
-
-
 .calculator {
-max-width: 530px;
+max-width: 600px;
 background-color: beige;
-padding: 20px;
+padding: 45px;
 border-radius: 10px;
-margin: 10px auto;
+margin: 10% auto;
 
 }
 
-
 input[type=text] {
-width: 315px;
+    width: 315px;
     height: 25px;
     border-radius: 5px;
     border: 0px;
     background-color: #333333;
     color: #d9d9d9;
-    padding: 0 5px 0 5px;
-    margin: 0 0px 10px 84px;
+    padding: 0 6px 0 5px;
+    margin: 0 0px 10px 90px;
 
 }
 
