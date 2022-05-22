@@ -1,162 +1,180 @@
-class Calculator {
-    constructor(previousOperandTextElement, currentOperandTextElement) {
-      this.previousOperandTextElement = previousOperandTextElement
-      this.currentOperandTextElement = currentOperandTextElement
-      this.clear()
+var display = document.getElementById("screen");
+var buttons = document.getElementsByClassName("button");
+  
+  Array.prototype.forEach.call(buttons, function(button) {
+  button.addEventListener("click", function() {
+    if (button.textContent != "=" && 
+    button.textContent != "C" && 
+    button.textContent != "x" && 
+    button.textContent != "÷" && 
+    button.textContent != "√" && 
+    button.textContent != "x ²" && 
+    button.textContent != "%" && 
+    button.textContent != "<=" && 
+    button.textContent != "±" && 
+    button.textContent != "sin" && 
+    button.textContent != "cos" && 
+    button.textContent != "tan" && 
+    button.textContent != "log" && 
+    button.textContent != "ln" && 
+    button.textContent != "x^" && 
+    button.textContent != "x !" && 
+    button.textContent != "π" && 
+    button.textContent != "e" && 
+    button.textContent != "rad" 
+    && button.textContent != "∘") {
+      display.value += button.textContent;
+    } else if (button.textContent === "=") {
+      equals();
+    } else if (button.textContent === "C") {
+      clear();
+    } else if (button.textContent === "x") {
+      multiply();
+    } else if (button.textContent === "÷") {
+      divide();
+    } else if (button.textContent === "±") {
+      plusMinus();
+    } else if (button.textContent === "<=") {
+      backspace();
+    } else if (button.textContent === "%") {
+      percent();
+    } else if (button.textContent === "π") {
+      pi();
+    } else if (button.textContent === "x ²") {
+      square();
+    } else if (button.textContent === "√") {
+      squareRoot();
+    } else if (button.textContent === "sin") {
+      sin();
+    } else if (button.textContent === "cos") {
+      cos();
+    } else if (button.textContent === "tan") {
+      tan();
+    } else if (button.textContent === "log") {
+      log();
+    } else if (button.textContent === "ln") {
+      ln();
+    } else if (button.textContent === "x^") {
+      exponent();
+    } else if (button.textContent === "x !") {
+      factorial();
+    } else if (button.textContent === "e") {
+      exp();
+    } else if (button.textContent === "rad") {
+      radians();
+    } else if (button.textContent === "∘") {
+      degrees();
     }
-  
-    clear() {
-      this.currentOperand = ''
-      this.previousOperand = ''
-      this.operation = undefined
-    }
-  
-    delete() {
-      this.currentOperand = this.currentOperand.toString().slice(0, -1)
-    }
-  
-    appendNumber(number) {
-      if (number === '.' && this.currentOperand.includes('.')) return
-      this.currentOperand = this.currentOperand.toString() + number.toString()
-    }
-  
-    chooseOperation(operation) {
-      if (this.currentOperand === '') return
-      if (this.previousOperand !== '') {
-        this.compute()
-      }
-      this.operation = operation
-      this.previousOperand = this.currentOperand
-      this.currentOperand = ''
-    }
-  
-    compute() {
-      let computation
-      const prev = parseFloat(this.previousOperand)
-      const current = parseFloat(this.currentOperand)
-      if (isNaN(prev) || isNaN(current)) return
-      switch (this.operation) {
-        case '+':
-          computation = prev + current
-          break
-        case '-':
-          computation = prev - current
-          break
-        case '*':
-          computation = prev * current
-          break
-        case '÷':
-          computation = prev / current
-          break
-        default:
-          return
-      }
-      this.currentOperand = computation
-      this.operation = undefined
-      this.previousOperand = ''
-    }
-  
-    getDisplayNumber(number) {
-      const stringNumber = number.toString()
-      const integerDigits = parseFloat(stringNumber.split('.')[0])
-      const decimalDigits = stringNumber.split('.')[1]
-      let integerDisplay
-      if (isNaN(integerDigits)) {
-        integerDisplay = ''
-      } else {
-        integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
-      }
-      if (decimalDigits != null) {
-        return `${integerDisplay}.${decimalDigits}`
-      } else {
-        return integerDisplay
-      }
-    }
-  
-    updateDisplay() {
-      this.currentOperandTextElement.innerText =
-        this.getDisplayNumber(this.currentOperand)
-      if (this.operation != null) {
-        this.previousOperandTextElement.innerText =
-          `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
-      } else {
-        this.previousOperandTextElement.innerText = ''
-      }
-    }
-  }
-  
-  
-  const numberButtons = document.querySelectorAll('[data-number]')
-  const operationButtons = document.querySelectorAll('[data-operation]')
-  const equalsButton = document.querySelector('[data-equals]')
-  const deleteButton = document.querySelector('[data-delete]')
-  const allClearButton = document.querySelector('[data-all-clear]')
-  const previousOperandTextElement = document.querySelector('[data-previous-operand]')
-  const currentOperandTextElement = document.querySelector('[data-current-operand]')
-  
-  const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
-  
-  numberButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      calculator.appendNumber(button.innerText)
-      calculator.updateDisplay()
-    })
-  })
-  
-  operationButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      calculator.chooseOperation(button.innerText)
-      calculator.updateDisplay()
-    })
-  })
-  
-  equalsButton.addEventListener('click', button => {
-    calculator.compute()
-    calculator.updateDisplay()
-  })
-  
-  allClearButton.addEventListener('click', button => {
-    calculator.clear()
-    calculator.updateDisplay()
-  })
-  
-  deleteButton.addEventListener('click', button => {
-    calculator.delete()
-    calculator.updateDisplay()
-  })
-  
-  document.addEventListener('keydown', function (event) {
-    let patternForNumbers = /[0-9]/g;
-    let patternForOperators = /[+\-*\/]/g
-    if (event.key.match(patternForNumbers)) {
-      event.preventDefault();
-      calculator.appendNumber(event.key)
-      calculator.updateDisplay()
-    }
-    if (event.key === '.') {
-      event.preventDefault();
-      calculator.appendNumber(event.key)
-      calculator.updateDisplay()
-    }
-    if (event.key.match(patternForOperators)) {
-      event.preventDefault();
-      calculator.chooseOperation(event.key)
-      calculator.updateDisplay()
-    }
-    if (event.key === 'Enter' || event.key === '=') {
-      event.preventDefault();
-      calculator.compute()
-      calculator.updateDisplay()
-    }
-    if (event.key === "Backspace") {
-      event.preventDefault();
-      calculator.delete()
-      calculator.updateDisplay()
-    }
-    if (event.key == 'Delete') {
-      event.preventDefault();
-      calculator.clear()
-      calculator.updateDisplay()
-    }
-  
   });
+});
+
+
+function syntaxError() {
+  if (eval(display.value) == SyntaxError || eval(display.value) == ReferenceError || eval(display.value) == TypeError) {
+    display.value == "Syntax Error";
+  }
+}
+
+
+function equals() {
+  if ((display.value).indexOf("^") > -1) {
+    var base = (display.value).slice(0, (display.value).indexOf("^"));
+    var exponent = (display.value).slice((display.value).indexOf("^") + 1);
+    display.value = eval("Math.pow(" + base + "," + exponent + ")");
+  } else {
+    display.value = eval(display.value)
+    checkLength()
+    syntaxError()
+  }
+}
+
+function clear() {
+  display.value = "";
+}
+
+function backspace() {
+  display.value = display.value.substring(0, display.value.length - 1);
+}
+
+function multiply() {
+  display.value += "*";
+}
+
+function divide() {
+  display.value +=  "/";
+}
+
+function plusMinus() {
+  if (display.value.charAt(0) === "-") {
+    display.value = display.value.slice(1);
+  } else {
+    display.value = "-" + display.value;
+  }
+}
+
+function factorial() {
+  var number = 1;
+  if (display.value === 0) {
+    display.value = "1";
+  } else if (display.value < 0) {
+    display.value = "undefined";
+  } else {
+    var number = 1;
+    for (var i = display.value; i > 0; i--) {
+      number *=  i;
+    }
+    display.value = number;
+  }
+}
+
+function pi() {
+  display.value = (display.value * Math.PI);
+}
+
+function square() {
+  display.value = eval(display.value * display.value);
+}
+
+function squareRoot() {
+  display.value = Math.sqrt(display.value);
+}
+
+function percent() {
+  display.value = display.value / 100;
+}
+
+function sin() {
+  display.value = Math.sin(display.value);
+}
+
+function cos() {
+  display.value = Math.cos(display.value);
+}
+
+function tan() {
+  display.value = Math.tan(display.value);
+}
+
+function log() {
+  display.value = Math.log10(display.value);
+}
+
+function ln() {
+  display.value = Math.log(display.value);
+}
+
+function exponent() {
+  display.value += "^";
+}
+
+function exp() {
+  display.value = Math.exp(display.value);
+}
+
+function radians() {
+  display.value = display.value * (Math.PI / 180);
+}
+
+function degrees() {
+  display.value = display.value * (180 / Math.PI);
+}
